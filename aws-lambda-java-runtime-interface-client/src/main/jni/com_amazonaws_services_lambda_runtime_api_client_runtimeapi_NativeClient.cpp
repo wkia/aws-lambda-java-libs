@@ -126,3 +126,9 @@ JNIEXPORT void JNICALL Java_com_amazonaws_services_lambda_runtime_api_client_run
     throwLambdaRuntimeClientException(env, errorMessage, outcome.get_failure());
   }
 }
+
+JNIEXPORT void JNICALL Java_com_amazonaws_services_lambda_runtime_api_client_runtimeapi_NativeClient_deinitializeClient(JNIEnv *env, jobject thisObject) {
+  delete CLIENT;
+  CLIENT = NULL;
+}
+

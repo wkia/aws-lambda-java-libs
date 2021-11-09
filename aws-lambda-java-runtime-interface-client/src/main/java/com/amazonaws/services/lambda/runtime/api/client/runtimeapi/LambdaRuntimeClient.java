@@ -38,11 +38,11 @@ public class LambdaRuntimeClient {
     }
 
     public InvocationRequest waitForNextInvocation() {
-        return NativeClient.next();
+        return NativeClient.nextWrapper();
     }
 
     public void postInvocationResponse(String requestId, byte[] response) {
-        NativeClient.postInvocationResponse(requestId.getBytes(UTF_8), response);
+        NativeClient.postInvocationResponseWrapper(requestId.getBytes(UTF_8), response);
     }
 
     public void postInvocationError(String requestId, byte[] errorResponse, String errorType) throws IOException {
