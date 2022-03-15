@@ -2,7 +2,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.amazonaws</groupId>
+  <groupId>io.github.crac.com.amazonaws</groupId>
   <artifactId>aws-lambda-java-runtime-interface-client</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
@@ -20,9 +20,15 @@
     </license>
   </licenses>
   <scm>
-    <url>https://github.com/aws/aws-lambda-java-libs.git</url>
+    <url>http://github.com/CRaC/aws-lambda-java-libs/tree/master</url>
   </scm>
   <developers>
+    <developer>
+      <id>antonkozlov</id>
+      <name>Anton Kozlov</name>
+      <url>https://github.com/AntonKozlov</url>
+      <email>akozlov@azul.com</email>
+    </developer>
     <developer>
       <name>AWS Lambda team</name>
       <organization>Amazon Web Services</organization>
@@ -35,14 +41,6 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>github</id>
-      <url>https://maven.pkg.github.com/crac/org.crac</url>
-    </repository>
-  </repositories>
-
-
   <dependencies>
     <dependency>
       <groupId>com.amazonaws</groupId>
@@ -50,9 +48,9 @@
       <version>1.2.0</version>
     </dependency>
     <dependency>
-      <groupId>org.crac</groupId>
-      <artifactId>crac</artifactId>
-      <version>999-SNAPSHOT</version>
+      <groupId>io.github.crac</groupId>
+      <artifactId>org-crac</artifactId>
+      <version>0.1.0</version>
     </dependency>
     <dependency>
       <groupId>com.amazonaws</groupId>
@@ -255,8 +253,8 @@
             <version>1.6.3</version>
             <extensions>true</extensions>
             <configuration>
-              <serverId>sonatype-nexus-staging</serverId>
-              <nexusUrl>https://aws.oss.sonatype.org/</nexusUrl>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
               <autoReleaseAfterClose>false</autoReleaseAfterClose>
             </configuration>
           </plugin>
