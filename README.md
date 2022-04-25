@@ -1,3 +1,16 @@
+# AWS Lambda Libs on CRaC
+
+This is a version of the original AWS Lambda Libraries with CRaC support added.
+
+To use, add next to the pom.xml:
+```
+    <dependency>
+      <groupId>io.github.crac.com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-runtime-interface-client</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+```
+
 # AWS Lambda Java Support Libraries
 Interface definitions for Java code running on the AWS Lambda platform.
 
