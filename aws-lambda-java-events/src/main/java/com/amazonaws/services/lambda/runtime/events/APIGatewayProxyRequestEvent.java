@@ -11,6 +11,8 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 4189228800688527467L;
 
+    private String version;
+
     private String resource;
 
     private String path;
@@ -440,6 +442,8 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
 
         private String apiKey;
 
+        private String principalOrgId;
+
         private String sourceIp;
 
         private String cognitoAuthenticationType;
@@ -571,6 +575,29 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
          */
         public RequestIdentity withApiKey(String apiKey) {
             this.setApiKey(apiKey);
+            return this;
+        }
+
+        /**
+         * @return the principal org Id
+         */
+        public String getPrincipalOrgId() {
+            return principalOrgId;
+        }
+
+        /**
+         * @param principalOrgId the principal org Id
+         */
+        public void setPrincipalOrgId(String principalOrgId) {
+            this.principalOrgId = principalOrgId;
+        }
+
+        /**
+         * @param principalOrgId the principal org Id
+         * @return RequestIdentity object
+         */
+        public RequestIdentity withPrincipalOrgId(String principalOrgId) {
+            this.setPrincipalOrgId(principalOrgId);
             return this;
         }
 
@@ -756,6 +783,8 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
                 sb.append("caller: ").append(getCaller()).append(",");
             if (getApiKey() != null)
                 sb.append("apiKey: ").append(getApiKey()).append(",");
+            if (getPrincipalOrgId() != null)
+                sb.append("principalOrgId: ").append(getPrincipalOrgId()).append(",");
             if (getSourceIp() != null)
                 sb.append("sourceIp: ").append(getSourceIp()).append(",");
             if (getCognitoAuthenticationType() != null)
@@ -804,6 +833,10 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
                 return false;
             if (other.getApiKey() != null && other.getApiKey().equals(this.getApiKey()) == false)
                 return false;
+            if (other.getPrincipalOrgId() == null ^ this.getPrincipalOrgId() == null)
+                return false;
+            if (other.getPrincipalOrgId() != null && other.getPrincipalOrgId().equals(this.getPrincipalOrgId()) == false)
+                return false;
             if (other.getSourceIp() == null ^ this.getSourceIp() == null)
                 return false;
             if (other.getSourceIp() != null && other.getSourceIp().equals(this.getSourceIp()) == false)
@@ -846,6 +879,7 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
             hashCode = prime * hashCode + ((getCognitoIdentityId() == null) ? 0 : getCognitoIdentityId().hashCode());
             hashCode = prime * hashCode + ((getCaller() == null) ? 0 : getCaller().hashCode());
             hashCode = prime * hashCode + ((getApiKey() == null) ? 0 : getApiKey().hashCode());
+            hashCode = prime * hashCode + ((getPrincipalOrgId() == null) ? 0 : getPrincipalOrgId().hashCode());
             hashCode = prime * hashCode + ((getSourceIp() == null) ? 0 : getSourceIp().hashCode());
             hashCode = prime * hashCode + ((getCognitoAuthenticationType() == null) ? 0 : getCognitoAuthenticationType().hashCode());
             hashCode = prime * hashCode + ((getCognitoAuthenticationProvider() == null) ? 0 : getCognitoAuthenticationProvider().hashCode());
@@ -870,6 +904,29 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
      * default constructor
      */
     public APIGatewayProxyRequestEvent() {}
+
+    /**
+     * @return The payload format version
+     */
+    public String getVersion() {
+        return version;
+    }
+
+    /**
+     * @param version The payload format version
+     */
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    /**
+     * @param version The payload format version
+     * @return
+     */
+    public APIGatewayProxyRequestEvent withVersion(String version) {
+        this.setVersion(version);
+        return this;
+    }
 
     /**
      * @return The resource path defined in API Gateway
@@ -1174,6 +1231,8 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{");
+        if (getVersion() != null)
+            sb.append("version: ").append(getVersion()).append(",");
         if (getResource() != null)
             sb.append("resource: ").append(getResource()).append(",");
         if (getPath() != null)
@@ -1212,6 +1271,10 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
         if (obj instanceof APIGatewayProxyRequestEvent == false)
             return false;
         APIGatewayProxyRequestEvent other = (APIGatewayProxyRequestEvent) obj;
+        if (other.getVersion() == null ^ this.getVersion() == null)
+            return false;
+        if (other.getVersion() != null && other.getVersion().equals(this.getVersion()) == false)
+            return false;
         if (other.getResource() == null ^ this.getResource() == null)
             return false;
         if (other.getResource() != null && other.getResource().equals(this.getResource()) == false)
@@ -1268,6 +1331,7 @@ public class APIGatewayProxyRequestEvent implements Serializable, Cloneable {
         final int prime = 31;
         int hashCode = 1;
 
+        hashCode = prime * hashCode + ((getVersion() == null) ? 0 : getVersion().hashCode());
         hashCode = prime * hashCode + ((getResource() == null) ? 0 : getResource().hashCode());
         hashCode = prime * hashCode + ((getPath() == null) ? 0 : getPath().hashCode());
         hashCode = prime * hashCode + ((getHttpMethod() == null) ? 0 : getHttpMethod().hashCode());
