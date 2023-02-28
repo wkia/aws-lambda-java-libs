@@ -2,11 +2,12 @@
 
 package com.amazonaws.services.lambda.runtime.api.client.logging;
 
-import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.time.Instant;
 
 /**
  * FramedTelemetryLogSink implements the logging contract between runtimes and the platform. It implements a simple
@@ -14,25 +15,25 @@ import java.nio.ByteOrder;
  *
  *  <pre>
  * {@code
- * +----------------------+------------------------+-----------------------+
- * | Frame Type - 4 bytes | Length (len) - 4 bytes | Message - 'len' bytes |
- * +----------------------+------------------------+-----------------------+
+ * +----------------------+------------------------+---------------------+-----------------------+
+ * | Frame Type - 4 bytes | Length (len) - 4 bytes | Timestamp - 8 bytes | Message - 'len' bytes |
+ * +----------------------+------------------------+---------------------+-----------------------+
  * }
  * </pre>
  *
  * The first 4 bytes indicate the type of the frame - log frames have a type defined as the hex value 0xa55a0001. The
- * second 4 bytes should indicate the message's length. The next 'len' bytes contain the message. The byte order is
- * big-endian.
+ * second 4 bytes should indicate the message's length. The next 8 bytes contain UNIX timestamp of the message in 
+ * microsecond accuracy. The next 'len' bytes contain the message. The byte order is big-endian.
  */
 public class FramedTelemetryLogSink implements LogSink {
 
-    private static final int HEADER_LENGTH = 8;
+    private static final int HEADER_LENGTH = 16;
 
     private final FileOutputStream logOutputStream;
     private final ByteBuffer headerBuf;
 
-    public FramedTelemetryLogSink(File file) throws IOException {
-        this.logOutputStream = new FileOutputStream(file);
+    public FramedTelemetryLogSink(FileDescriptor fd) throws IOException {
+        this.logOutputStream = new FileOutputStream(fd);
         this.headerBuf = ByteBuffer.allocate(HEADER_LENGTH).order(ByteOrder.BIG_ENDIAN);
     }
 
@@ -51,6 +52,11 @@ public class FramedTelemetryLogSink implements LogSink {
         this.logOutputStream.write(message);
     }
 
+    private long timestamp() {
+        Instant instant = Instant.now();
+        return instant.getEpochSecond() * 1_000_000 + instant.getNano() / 1000; // microsecond precision
+    }
+
     /**
      * Updates the header ByteBuffer with the provided length. The header comprises the frame type and message length.
      */
@@ -58,6 +64,7 @@ public class FramedTelemetryLogSink implements LogSink {
         this.headerBuf.clear();
         this.headerBuf.putInt(FrameType.LOG.getValue());
         this.headerBuf.putInt(length);
+        this.headerBuf.putLong(timestamp());
         this.headerBuf.flip();
     }
 
