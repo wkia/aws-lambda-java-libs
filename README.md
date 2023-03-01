@@ -7,7 +7,7 @@ To use, add next to the pom.xml:
     <dependency>
       <groupId>io.github.crac.com.amazonaws</groupId>
       <artifactId>aws-lambda-java-runtime-interface-client</artifactId>
-      <version>1.0.0</version>
+      <version>2.2.0</version>
     </dependency>
 ```
 
